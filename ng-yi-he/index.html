@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-tertiary-container": "#edebea",
+              "on-secondary-container": "#27308a",
+              "tertiary-fixed": "#e4e2e1",
+              "on-primary": "#ffffff",
+              "on-primary-fixed": "#410002",
+              "tertiary": "#525252",
+              "on-error": "#ffffff",
+              "surface-container-high": "#e8e8e8",
+              "surface-container": "#eeeeee",
+              "surface": "#f9f9f9",
+              "on-surface": "#1a1c1c",
+              "error-container": "#ffdad6",
+              "on-error-container": "#93000a",
+              "on-tertiary": "#ffffff",
+              "error": "#ba1a1a",
+              "inverse-primary": "#ffb4ab",
+              "on-secondary-fixed-variant": "#343d96",
+              "inverse-surface": "#2f3131",
+              "on-background": "#1a1c1c",
+              "tertiary-fixed-dim": "#c8c6c6",
+              "inverse-on-surface": "#f1f1f1",
+              "on-tertiary-fixed-variant": "#474747",
+              "on-surface-variant": "#5c403c",
+              "surface-dim": "#dadada",
+              "primary-container": "#cf1f1f",
+              "surface-container-lowest": "#ffffff",
+              "surface-container-highest": "#e2e2e2",
+              "background": "#f9f9f9",
+              "on-primary-container": "#ffe5e2",
+              "on-secondary-fixed": "#000767",
+              "surface-variant": "#e2e2e2",
+              "on-primary-fixed-variant": "#93000a",
+              "surface-tint": "#be0d15",
+              "primary": "#a8000d",
+              "secondary-fixed-dim": "#bdc2ff",
+              "outline": "#916f6b",
+              "surface-bright": "#f9f9f9",
+              "on-secondary": "#ffffff",
+              "primary-fixed": "#ffdad6",
+              "surface-container-low": "#f3f3f3",
+              "tertiary-container": "#6a6a6a",
+              "secondary-container": "#959efd",
+              "outline-variant": "#e5bdb8",
+              "primary-fixed-dim": "#ffb4ab",
+              "secondary-fixed": "#e0e0ff",
+              "on-tertiary-fixed": "#1b1c1c",
+              "secondary": "#4c56af"
+            },
+            fontFamily: {
+              "headline": ["Newsreader", "serif"],
+              "body": ["Manrope", "sans-serif"],
+              "label": ["Manrope", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+        }
+        body {
+            -webkit-tap-highlight-color: transparent;
+            font-family: 'Manrope', sans-serif;
+            height: 100dvh;
+            overflow: auto;
+            position: relative;
+        }
+        .watermark {
+            position: absolute;
+            top: 27.5%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            opacity: 0.07;
+            pointer-events: none;
+            z-index: -1;
+        }
+        .editorial-shadow {
+            box-shadow: 0 12px 24px rgba(26, 28, 28, 0.04);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background antialiased">
+<!-- Watermark Background -->
+<img alt="Watermark Logo" class="watermark" src="https://lh3.googleusercontent.com/aida/ADBb0uhoXtWPxt-89WzsAHpb25pwnrUEfxe8NgoRs1a_SUFH4tzYhv_M0JV9aKNu2KwmAOF0KhEd8MEnWLxzQdbTPQ4mdmxLX0nqqn8JldZrBvUSBeWyF_u0bgCZR-Ydp1vqgwGrA4mueiOJsD8c_I4TmUPXm0rBjYahRV8k2kO2XcnmdNHLkuHgCFPdcWAALOmT93uVqQLmeqcel0UIhnMOhdTCcSKh2a_usU5ew-1cV7ksPIAcaLibqi3SfTEZ9h7zuB5nY5oW0Lpqaw"/>
+<!-- Main container - Increased top padding from 8vh to 10.5vh -->
+<main class="h-full flex flex-col px-6 pb-6 pt-[10.5vh] max-w-md mx-auto overflow-y-auto relative z-10">
+<!-- Profile Section -->
+<section class="flex flex-col items-start space-y-2 mb-6">
+<div class="space-y-1">
+<h2 class="font-headline text-5xl font-extrabold tracking-tight text-on-background leading-[0.95]"><span class="text-primary-container">ME4</span> Ng Yi He</h2>
+<p class="font-label text-sm uppercase tracking-wider text-primary font-black pt-1">
+                    PRODUCT ENGINEER,<BR> AGILE INNOVATION SQUAD,<BR> 5 AIR ENGINEERING AND LOGISTICS GROUP
+</p>
+</div>
+</section>
+<!-- Contact Cards - Transparent backgrounds, opaque content -->
+<section class="flex flex-col gap-2">
+<div class="bg-surface-container-lowest/40 backdrop-blur-[2px] p-3 rounded-sm editorial-shadow flex items-center space-x-4 border-l-4 border-primary">
+<div class="bg-primary-container/15 p-2 rounded-full text-primary">
+<span class="material-symbols-outlined text-xl opacity-100" data-icon="call">call</span>
+</div>
+<div class="opacity-100">
+<span class="block font-label text-[9px] uppercase text-on-surface-variant tracking-widest font-bold">Mobile</span>
+<a class="font-body text-on-surface font-semibold tracking-wide text-sm">+65 9236 5646</a>
+</div>
+</div>
+<div class="bg-surface-container-lowest/40 backdrop-blur-[2px] p-3 rounded-sm editorial-shadow flex items-center space-x-4 border-l-4 border-primary">
+<div class="bg-primary-container/15 p-2 rounded-full text-primary">
+<span class="material-symbols-outlined text-xl opacity-100" data-icon="mail">mail</span>
+</div>
+<div class="opacity-100">
+<span class="block font-label text-[9px] uppercase text-on-surface-variant tracking-widest font-bold">Email</span>
+<a class="font-body text-on-surface font-semibold tracking-wide text-sm">ng_yi_he@defence.gov.sg</a>
+</div>
+</div>
+</section>
+<section class="mt-[15vh] space-y-3">
+<div class="bg-surface-container-lowest p-8 rounded-sm shadow-sm flex flex-col items-center">
+    <div class="bg-white p-2 shadow-[0_20px_40px_rgba(26,28,28,0.06)] mb-4">
+        <img src="qr.png" alt="Scan to connect" class="w-32 h-32">
+    </div>
+    <p class="font-body text-label-md uppercase tracking-[0.05em] text-on-surface-variant">Scan to Connect</p>
+    <p class="font-body text-body-sm text-center mt-2 text-tertiary">Instant access to my professional contact details.</p>
+</div>
+<button id="downloadBtn" class="w-full bg-gradient-to-br from-primary to-primary-container text-on-primary font-body font-bold py-3 rounded-sm shadow-lg active:scale-[0.98] transition-all duration-150 uppercase tracking-[0.15em] text-xs">
+    Download Contact Details
+</button>
+</section>
+</main>
+<script>
+        // This variable must match the filename generated by your Python script
+        const vcardFile = "contact.vcf";
+
+        function triggerDownload() {
+            const link = document.createElement('a');
+            link.href = vcardFile;
+            link.download = vcardFile;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Trigger 1: The Red Button Click
+        const btn = document.getElementById('downloadBtn');
+        if (btn) {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                triggerDownload();
+            });
+        }
+
+        // Trigger 2: Automatic Download on Page Load
+        // We use a 1-second delay to ensure the UI renders and 
+        // to avoid being flagged as a "malicious" immediate download by mobile browsers.
+        window.addEventListener('load', () => {
+            setTimeout(triggerDownload, 1000);
+        });
+    </script>
+</body></html>
