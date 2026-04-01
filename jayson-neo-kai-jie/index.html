@@ -146,61 +146,55 @@
     </div>
 
     <script>
-        const vCardData = `BEGIN:VCARD
-VERSION:3.0
-N:Jayson;Neo;Kai Jie;;
-FN:Neo Kai Jie, Jayson
-ORG:Republic of Singapore Air Force
-TITLE:Data Analyst, Agile Innovation Squad, 5 AELG
-ADR;TYPE=WORK:;;760 Old Choa Chu Kang Road S699806
-TEL;TYPE=CELL,VOICE:+6583384918
-EMAIL;TYPE=PREF,INTERNET:neo_kai_jie@defence.gov.sg
-END:VCARD`;
+    const vcfUrl = "contact.vcf"; // Path to your file in the repo
+    const fileName = "contact.vcf";
 
-        const fileName = "namecard_jayson.vcf";
+    async function triggerVCardAction() {
+        try {
+            // Fetch the file to check if it's available and convert to Blob for sharing
+            const response = await fetch(vcfUrl);
+            const blob = await response.blob();
+            const file = new File([blob], fileName, { type: "text/vcard" });
 
-        function triggerVCardAction() {
-            if (navigator.share && navigator.canShare) {
-                const file = new File([vCardData], fileName, { type: "text/vcard" });
-                if (navigator.canShare({ files: [file] })) {
-                    navigator.share({
-                        files: [file],
-                        title: 'Jayson Neo Contact',
-                        text: 'Save contact details'
-                    }).catch(() => fallbackDownload());
-                    return;
-                }
+            // Attempt Native Share (Mobile)
+            if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+                await navigator.share({
+                    files: [file],
+                    title: 'Jayson Neo Contact',
+                    text: 'Save contact details'
+                });
+            } else {
+                fallbackDownload();
             }
+        } catch (error) {
+            console.error("Download failed", error);
             fallbackDownload();
         }
+    }
 
-        function fallbackDownload() {
-            const uri = "data:text/vcard;charset=utf-8," + encodeURIComponent(vCardData);
-            const link = document.createElement("a");
-            link.href = uri;
-            link.setAttribute("download", fileName);
-            document.body.appendChild(link);
-            link.click();
-            setTimeout(() => document.body.removeChild(link), 100);
+    function fallbackDownload() {
+        const link = document.createElement("a");
+        link.href = vcfUrl;
+        link.setAttribute("download", fileName);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    window.addEventListener('load', () => {
+        const displayEl = document.getElementById("display-filename");
+        if (displayEl) {
+            displayEl.textContent = fileName.replace('.vcf', '');
         }
 
-        // Logic to run ONCE the page is fully loaded
-        window.addEventListener('load', () => {
-            // 1. Map the text to the element (This was the missing part)
-            const displayEl = document.getElementById("display-filename");
-            if (displayEl) {
-                displayEl.textContent = fileName.replace('.vcf', '');
-            }
+        document.getElementById('downloadBtn').onclick = (e) => {
+            e.preventDefault();
+            triggerVCardAction();
+        };
 
-            // 2. Set up the button click
-            document.getElementById('downloadBtn').onclick = (e) => {
-                e.preventDefault();
-                triggerVCardAction();
-            };
-
-            // 3. Optional: Automatic trigger after 1 second
-            setTimeout(triggerVCardAction, 1000);
-        });
-    </script>
+        // Automatic trigger after 1 second
+        setTimeout(triggerVCardAction, 1000);
+    });
+</script>
 </body>
 </html>
