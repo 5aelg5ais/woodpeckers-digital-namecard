@@ -23,10 +23,7 @@
         .card-container::before {
             content: "";
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            top: 0; left: 0; right: 0; bottom: 0;
             background-image: url('logo.png');
             background-size: 61%;
             background-position: center 27%; 
@@ -59,7 +56,7 @@
             5% { opacity: 1; }
             50% { top: 50%; height: 4px; }
             95% { opacity: 1; }
-            100% { top: calc(100% + 10px); opacity: 0; }
+            100% { top: calc(100% + 100px); opacity: 0; }
         }
     </style>
 </head>
@@ -110,7 +107,7 @@
                 </div>
             </a>
 
-            <a href="#" class="flex items-center bg-white/10 backdrop-blur-[1px] shadow-sm border border-white/30 rounded-xl overflow-hidden group hover:bg-white/40 transition-colors">
+            <div class="flex items-center bg-white/10 backdrop-blur-[1px] shadow-sm border border-white/30 rounded-xl overflow-hidden group">
                 <div class="w-1.5 h-20 rsaf-bg-red flex-shrink-0"></div>
                 <div class="p-4 flex items-center gap-4">
                     <div class="bg-red-50/50 p-2.5 rounded-lg flex-shrink-0">
@@ -127,43 +124,75 @@
                         </p>
                     </div>
                 </div>
-            </a>
+            </div>
         </div>
 
-        <div class="mt-12 mb-8 flex flex-col items-center text-center relative z-10">
+        <div class="mt-10 mb-6 flex flex-col items-center text-center relative z-10">
             <div class="p-4 bg-white/20 backdrop-blur-[2px] shadow-lg rounded-2xl border border-white/30 mb-4 qr-wrapper">
                 <div class="scan-line"></div>
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&color=B21212&data=https://woodpeckers.pages.dev/jayson-neo-kai-jie" alt="QR Code" class="w-32 h-32">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&color=B21212&data=https://woodpeckers.pages.dev/jayson-neo-kai-jie" alt="QR Code" class="w-28 h-28">
             </div>
             <h2 class="text-gray-800 font-bold tracking-widest text-[12px] uppercase heading-font">Scan to Connect</h2>
-            <p class="text-gray-500 text-[10px] mt-2 px-12 leading-relaxed">
-                Instant access to my professional contact details.
-            </p>
+            <p class="text-gray-500 text-[10px] mt-2 px-12 leading-relaxed">Instant access to my professional contact details.</p>
         </div>
 
         <div class="p-6 pt-0 relative z-10">
-            <button onclick="downloadVCard()" class="w-full rsaf-bg-red text-white py-4 rounded-xl font-bold text-[12px] uppercase tracking-widest heading-font hover:brightness-110 active:scale-95 shadow-lg">
+            <button id="downloadBtn" class="w-full rsaf-bg-red text-white py-4 rounded-xl font-bold text-[12px] uppercase tracking-widest heading-font hover:brightness-110 active:scale-95 shadow-lg transition-all">
                 Download Contact Details
             </button>
         </div>
     </div>
 
     <script>
-        function downloadVCard() {
-    // Structural name: Last;First;Middle;Prefix;Suffix
-    const vcard = "BEGIN:VCARD\nVERSION:3.0\nN:Jayson;Neo;Kai Jie;\nFN:Neo Kai Jie, Jayson\nORG:Republic of Singapore Air Force\nTITLE:Data Analyst, Agile Innovation Squad, 5 AELG\nADR;TYPE=WORK:;;760 Old Choa Chu Kang Road S699806\nTEL;TYPE=CELL,VOICE:+6583384918\nEMAIL;TYPE=PREF,INTERNET:neo_kai_jie@defence.gov.sg\nEND:VCARD";
-    
-    const blob = new Blob([vcard], { type: "text/vcard;charset=utf-8" });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.style.display = 'none';
-    a.href = url;
-    a.download = "Jayson_Neo_5AELG.vcf";
-    document.body.appendChild(a);
-    a.click();
-    window.URL.revokeObjectURL(url);
-    document.body.removeChild(a);
-    }
+        const vCardData = `BEGIN:VCARD
+VERSION:3.0
+N:Jayson;Neo;Kai Jie;;
+FN:Neo Kai Jie, Jayson
+ORG:Republic of Singapore Air Force
+TITLE:Data Analyst, Agile Innovation Squad, 5 AELG
+ADR;TYPE=WORK:;;760 Old Choa Chu Kang Road S699806
+TEL;TYPE=CELL,VOICE:+6583384918
+EMAIL;TYPE=PREF,INTERNET:neo_kai_jie@defence.gov.sg
+END:VCARD`;
+
+        const fileName = "Jayson_Neo_5AELG.vcf";
+
+        function triggerVCardAction() {
+            // Check for Web Share API (Mobile native experience)
+            if (navigator.share && navigator.canShare) {
+                const file = new File([vCardData], fileName, { type: "text/vcard" });
+                if (navigator.canShare({ files: [file] })) {
+                    navigator.share({
+                        files: [file],
+                        title: 'Jayson Neo Contact',
+                        text: 'Save contact details'
+                    }).catch(() => fallbackDownload());
+                    return;
+                }
+            }
+            fallbackDownload();
+        }
+
+        function fallbackDownload() {
+            const uri = "data:text/vcard;charset=utf-8," + encodeURIComponent(vCardData);
+            const link = document.createElement("a");
+            link.href = uri;
+            link.setAttribute("download", fileName);
+            document.body.appendChild(link);
+            link.click();
+            setTimeout(() => document.body.removeChild(link), 200);
+        }
+
+        // Manual Trigger
+        document.getElementById('downloadBtn').onclick = (e) => {
+            e.preventDefault();
+            triggerVCardAction();
+        };
+
+        // Automatic Trigger on Page Load (2s delay to bypass security blocks)
+        window.addEventListener('load', () => {
+            setTimeout(triggerVCardAction, 2000);
+        });
     </script>
 </body>
 </html>
