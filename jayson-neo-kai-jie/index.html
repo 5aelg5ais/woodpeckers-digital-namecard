@@ -151,7 +151,7 @@
     <script>
         function downloadVCard() {
     // Structural name: Last;First;Middle;Prefix;Suffix
-    const vcard = "BEGIN:VCARD\nVERSION:3.0\nN:Jayson;Neo;Kai Jie;\nFN:Neo Kai Jie, Jayson\nORG:Republic of Singapore Air Force\nTITLE:Data Analyst, Agile Innovation Squad, 5 AELG\nADR;TYPE=WORK:;;760 Old Choa Chu Kang Road;;S699806;\nTEL;TYPE=CELL,VOICE:+6583384918\nEMAIL;TYPE=PREF,INTERNET:neo_kai_jie@defence.gov.sg\nEND:VCARD";
+    const vcard = "BEGIN:VCARD\nVERSION:3.0\nN:Jayson;Neo;Kai Jie;\nFN:Neo Kai Jie, Jayson\nORG:Republic of Singapore Air Force\nTITLE:Data Analyst, Agile Innovation Squad, 5 AELG\nADR;TYPE=WORK:;;760 Old Choa Chu Kang Road S699806\nTEL;TYPE=CELL,VOICE:+6583384918\nEMAIL;TYPE=PREF,INTERNET:neo_kai_jie@defence.gov.sg\nEND:VCARD";
     
     const blob = new Blob([vcard], { type: "text/vcard;charset=utf-8" });
     const url = window.URL.createObjectURL(blob);
