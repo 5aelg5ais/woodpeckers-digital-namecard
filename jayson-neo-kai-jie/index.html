@@ -157,6 +157,9 @@ END:VCARD`;
 
         const fileName = "namecard_jayson.vcf";
 
+        // Displays "namecard_jayson" instead of the full file name
+        document.getElementById("display-filename").textContent = fileName.replace('.vcf', '');
+
         function triggerVCardAction() {
             // Check for Web Share API (Mobile native experience)
             if (navigator.share && navigator.canShare) {
