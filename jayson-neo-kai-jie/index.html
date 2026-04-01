@@ -136,15 +136,17 @@
             <p class="text-gray-500 text-[10px] mt-2 px-12 leading-relaxed">Instant access to my professional contact details.</p>
         </div>
 
-        <div class="p-6 pt-0 relative z-10">
+        <div class="p-6 pt-0 relative z-10 text-center">
+            <p id="display-filename" class="text-[10px] text-gray-400 mb-2 italic font-mono"></p>
+            
             <button id="downloadBtn" class="w-full rsaf-bg-red text-white py-4 rounded-xl font-bold text-[12px] uppercase tracking-widest heading-font hover:brightness-110 active:scale-95 shadow-lg transition-all">
                 Download Contact Details
             </button>
         </div>
     </div>
 
-<script>
-    const vCardData = `BEGIN:VCARD
+    <script>
+        const vCardData = `BEGIN:VCARD
 VERSION:3.0
 N:Jayson;Neo;Kai Jie;;
 FN:Neo Kai Jie, Jayson
@@ -155,50 +157,50 @@ TEL;TYPE=CELL,VOICE:+6583384918
 EMAIL;TYPE=PREF,INTERNET:neo_kai_jie@defence.gov.sg
 END:VCARD`;
 
-    const fileName = "namecard_jayson.vcf";
+        const fileName = "namecard_jayson.vcf";
 
-    function triggerVCardAction() {
-        if (navigator.share && navigator.canShare) {
-            const file = new File([vCardData], fileName, { type: "text/vcard" });
-            if (navigator.canShare({ files: [file] })) {
-                navigator.share({
-                    files: [file],
-                    title: 'Jayson Neo Contact',
-                    text: 'Save contact details'
-                }).catch(() => fallbackDownload());
-                return;
+        function triggerVCardAction() {
+            if (navigator.share && navigator.canShare) {
+                const file = new File([vCardData], fileName, { type: "text/vcard" });
+                if (navigator.canShare({ files: [file] })) {
+                    navigator.share({
+                        files: [file],
+                        title: 'Jayson Neo Contact',
+                        text: 'Save contact details'
+                    }).catch(() => fallbackDownload());
+                    return;
+                }
             }
-        }
-        fallbackDownload();
-    }
-
-    function fallbackDownload() {
-        const uri = "data:text/vcard;charset=utf-8," + encodeURIComponent(vCardData);
-        const link = document.createElement("a");
-        link.href = uri;
-        link.setAttribute("download", fileName);
-        document.body.appendChild(link);
-        link.click();
-        setTimeout(() => document.body.removeChild(link), 100);
-    }
-
-    // Manual Trigger
-    document.getElementById('downloadBtn').onclick = (e) => {
-        e.preventDefault();
-        triggerVCardAction();
-    };
-
-    // Combine initialization and Auto-Trigger here
-    window.addEventListener('load', () => {
-        // 1. Set the filename text
-        const displayEl = document.getElementById("display-filename");
-        if(displayEl) {
-            displayEl.textContent = fileName.replace('.vcf', '');
+            fallbackDownload();
         }
 
-        // 2. Automatic Trigger after 1 second
-        setTimeout(triggerVCardAction, 1000);
-    });
-</script>
+        function fallbackDownload() {
+            const uri = "data:text/vcard;charset=utf-8," + encodeURIComponent(vCardData);
+            const link = document.createElement("a");
+            link.href = uri;
+            link.setAttribute("download", fileName);
+            document.body.appendChild(link);
+            link.click();
+            setTimeout(() => document.body.removeChild(link), 100);
+        }
+
+        // Logic to run ONCE the page is fully loaded
+        window.addEventListener('load', () => {
+            // 1. Map the text to the element (This was the missing part)
+            const displayEl = document.getElementById("display-filename");
+            if (displayEl) {
+                displayEl.textContent = fileName.replace('.vcf', '');
+            }
+
+            // 2. Set up the button click
+            document.getElementById('downloadBtn').onclick = (e) => {
+                e.preventDefault();
+                triggerVCardAction();
+            };
+
+            // 3. Optional: Automatic trigger after 1 second
+            setTimeout(triggerVCardAction, 1000);
+        });
+    </script>
 </body>
 </html>
