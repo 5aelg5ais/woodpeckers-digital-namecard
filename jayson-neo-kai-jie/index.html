@@ -14,8 +14,8 @@
         .rsaf-bg-red { background-color: #B21212; }
 
         .card-container {
-            /* Reusing the logo source from your old index file */
-            background-image: url('http://lh3.googleusercontent.com/aida/ADBb0uhoXtWPxt-89WzsAHpb25pwnrUEfxe8NgoRs1a_SUFH4tzYhv_M0JV9aKNu2KwmAOF0KhEd8MEnWLxzQdbTPQ4mdmxLX0nqqn8JldZrBvUSBeWyF_u0bgCZR-Ydp1vqgwGrA4mueiOJsD8c_I4TmUPXm0rBjYahRV8k2kO2XcnmdNHLkuHgCFPdcWAALOmT93uVqQLmeqcel0UIhnMOhdTCcSKh2a_usU5ew-1cV7ksPIAcaLibqi3SfTEZ9h7zuB5nY5oW0Lpqaw');
+            /* Updated to https to prevent browser blocking */
+            background-image: url('https://googleusercontent.com/profile/picture/0');
             background-size: 80%;
             background-position: center 25%;
             background-repeat: no-repeat;
@@ -138,7 +138,6 @@
 
     <script>
         function downloadVCard() {
-            // Generating vCard dynamically from script
             const vcard = "BEGIN:VCARD\nVERSION:3.0\nFN:ME2 Jayson Neo Kai Jie\nORG:Republic of Singapore Air Force\nTITLE:Data Analyst, Agile Innovation Squad\nADR;TYPE=WORK:;;Tengah Air Base, Block 7061 (5SD), Level 2, Room 02-02;Singapore;;;\nTEL;TYPE=CELL,VOICE:+6583384918\nEMAIL;TYPE=PREF,INTERNET:neo_kai_jie@defence.gov.sg\nEND:VCARD";
             const blob = new Blob([vcard], { type: "text/vcard;charset=utf-8" });
             const url = window.URL.createObjectURL(blob);
