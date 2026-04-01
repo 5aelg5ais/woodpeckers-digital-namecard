@@ -143,8 +143,8 @@
         </div>
     </div>
 
-    <script>
-        const vCardData = `BEGIN:VCARD
+<script>
+    const vCardData = `BEGIN:VCARD
 VERSION:3.0
 N:Jayson;Neo;Kai Jie;;
 FN:Neo Kai Jie, Jayson
@@ -155,47 +155,50 @@ TEL;TYPE=CELL,VOICE:+6583384918
 EMAIL;TYPE=PREF,INTERNET:neo_kai_jie@defence.gov.sg
 END:VCARD`;
 
-        const fileName = "namecard_jayson.vcf";
+    const fileName = "namecard_jayson.vcf";
 
-        // Displays "namecard_jayson" instead of the full file name
-        document.getElementById("display-filename").textContent = fileName.replace('.vcf', '');
-
-        function triggerVCardAction() {
-            // Check for Web Share API (Mobile native experience)
-            if (navigator.share && navigator.canShare) {
-                const file = new File([vCardData], fileName, { type: "text/vcard" });
-                if (navigator.canShare({ files: [file] })) {
-                    navigator.share({
-                        files: [file],
-                        title: 'Jayson Neo Contact',
-                        text: 'Save contact details'
-                    }).catch(() => fallbackDownload());
-                    return;
-                }
+    function triggerVCardAction() {
+        if (navigator.share && navigator.canShare) {
+            const file = new File([vCardData], fileName, { type: "text/vcard" });
+            if (navigator.canShare({ files: [file] })) {
+                navigator.share({
+                    files: [file],
+                    title: 'Jayson Neo Contact',
+                    text: 'Save contact details'
+                }).catch(() => fallbackDownload());
+                return;
             }
-            fallbackDownload();
+        }
+        fallbackDownload();
+    }
+
+    function fallbackDownload() {
+        const uri = "data:text/vcard;charset=utf-8," + encodeURIComponent(vCardData);
+        const link = document.createElement("a");
+        link.href = uri;
+        link.setAttribute("download", fileName);
+        document.body.appendChild(link);
+        link.click();
+        setTimeout(() => document.body.removeChild(link), 100);
+    }
+
+    // Manual Trigger
+    document.getElementById('downloadBtn').onclick = (e) => {
+        e.preventDefault();
+        triggerVCardAction();
+    };
+
+    // Combine initialization and Auto-Trigger here
+    window.addEventListener('load', () => {
+        // 1. Set the filename text
+        const displayEl = document.getElementById("display-filename");
+        if(displayEl) {
+            displayEl.textContent = fileName.replace('.vcf', '');
         }
 
-        function fallbackDownload() {
-            const uri = "data:text/vcard;charset=utf-8," + encodeURIComponent(vCardData);
-            const link = document.createElement("a");
-            link.href = uri;
-            link.setAttribute("download", fileName);
-            document.body.appendChild(link);
-            link.click();
-            setTimeout(() => document.body.removeChild(link), 100);
-        }
-
-        // Manual Trigger
-        document.getElementById('downloadBtn').onclick = (e) => {
-            e.preventDefault();
-            triggerVCardAction();
-        };
-
-        // Automatic Trigger on Page Load (2s delay to bypass security blocks)
-        window.addEventListener('load', () => {
-            setTimeout(triggerVCardAction, 1000);
-        });
-    </script>
+        // 2. Automatic Trigger after 1 second
+        setTimeout(triggerVCardAction, 1000);
+    });
+</script>
 </body>
 </html>
