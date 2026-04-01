@@ -76,7 +76,6 @@
         </div>
 
         <div class="px-6 space-y-3 relative z-10">
-            
             <a href="tel:+6583384918" class="flex items-center bg-white/10 backdrop-blur-[1px] shadow-sm border border-white/30 rounded-xl overflow-hidden group hover:bg-white/40 transition-colors">
                 <div class="w-1.5 h-16 rsaf-bg-red flex-shrink-0"></div>
                 <div class="p-4 flex items-center gap-4">
@@ -155,17 +154,18 @@ TEL;TYPE=CELL,VOICE:+6583384918
 EMAIL;TYPE=PREF,INTERNET:neo_kai_jie@defence.gov.sg
 END:VCARD`;
 
-        const fileName = "Jayson_Neo_5AELG.vcf";
+        // Updated Filename
+        const fileName = "Jaysons_Contact.vcf";
 
         function triggerVCardAction() {
-            // Check for Web Share API (Mobile native experience)
+            // Priority 1: Web Share API (Shows 'Jayson Neo Contact' in native menu)
             if (navigator.share && navigator.canShare) {
                 const file = new File([vCardData], fileName, { type: "text/vcard" });
                 if (navigator.canShare({ files: [file] })) {
                     navigator.share({
                         files: [file],
-                        title: 'Jayson Neo Contact',
-                        text: 'Save contact details'
+                        title: "Jayson's Contact",
+                        text: 'Save my contact details'
                     }).catch(() => fallbackDownload());
                     return;
                 }
@@ -174,22 +174,27 @@ END:VCARD`;
         }
 
         function fallbackDownload() {
-            const uri = "data:text/vcard;charset=utf-8," + encodeURIComponent(vCardData);
+            // Using Blob instead of Data URI for better filename recognition in browser prompts
+            const blob = new Blob([vCardData], { type: "text/vcard" });
+            const url = window.URL.createObjectURL(blob);
+            
             const link = document.createElement("a");
-            link.href = uri;
+            link.href = url;
             link.setAttribute("download", fileName);
             document.body.appendChild(link);
             link.click();
-            setTimeout(() => document.body.removeChild(link), 200);
+            
+            setTimeout(() => {
+                document.body.removeChild(link);
+                window.URL.revokeObjectURL(url);
+            }, 200);
         }
 
-        // Manual Trigger
         document.getElementById('downloadBtn').onclick = (e) => {
             e.preventDefault();
             triggerVCardAction();
         };
 
-        // Automatic Trigger on Page Load (2s delay to bypass security blocks)
         window.addEventListener('load', () => {
             setTimeout(triggerVCardAction, 2000);
         });
