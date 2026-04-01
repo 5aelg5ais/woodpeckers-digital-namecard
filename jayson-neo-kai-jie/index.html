@@ -150,18 +150,20 @@
 
     <script>
         function downloadVCard() {
-            const vcard = "BEGIN:VCARD\nVERSION:3.0\nFN:Jayson Neo Kai Jie\nORG:RSAF\nTITLE:Data Analyst, Agile Innovation Squad\nADR;TYPE=WORK:;;Tengah Air Base;Singapore;;;\nTEL;TYPE=CELL,VOICE:+6583384918\nEMAIL;TYPE=PREF,INTERNET:neo_kai_jie@defence.gov.sg\nEND:VCARD";
-            const blob = new Blob([vcard], { type: "text/vcard;charset=utf-8" });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            a.style.display = 'none';
-            a.href = url;
-            a.download = "Jayson_Neo_5AELG.vcf";
-            document.body.appendChild(a);
-            a.click();
-            window.URL.revokeObjectURL(url);
-            document.body.removeChild(a);
-        }
+    // Structural name: Last;First;Middle;Prefix;Suffix
+    const vcard = "BEGIN:VCARD\nVERSION:3.0\nN:Neo;Jayson;Kai Jie;ME2;\nFN:ME2 Jayson Neo Kai Jie\nORG:Republic of Singapore Air Force\nTITLE:Data Analyst, Agile Innovation Squad, 5 Air Engineering and Logistics Group\nADR;TYPE=WORK:;;Tengah Air Base, Block 7061 (5SD), Level 2, Room 02-02;Singapore;;;\nTEL;TYPE=CELL,VOICE:+6583384918\nEMAIL;TYPE=PREF,INTERNET:neo_kai_jie@defence.gov.sg\nEND:VCARD";
+    
+    const blob = new Blob([vcard], { type: "text/vcard;charset=utf-8" });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.style.display = 'none';
+    a.href = url;
+    a.download = "Jayson_Neo_5AELG.vcf";
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+    }
     </script>
 </body>
 </html>
